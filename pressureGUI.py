@@ -116,15 +116,27 @@ def analyzeCrutch():
             x,y = eachLine.split(',')
             time.append(float(x))
             force.append(float(y))
+        
+    maxTime = 0;
     maxForce = max(force)
+    for i in range(0, len(force)):
+    if(force[i] == maxForce):
+        maxTime = time[i]/6000
+        
     maxLabel = Label(mainFrame, text = "Maximum Force Applied to Crutch is:", font = LARGE_FONT)
     maxLabel.pack(pady=10,padx=10)
     maxValLabel = Label(mainFrame, text = str(maxForce), font = LARGE_FONT)
     maxValLabel.pack(pady=10,padx=10)
+    maxLabel = Label(mainFrame, text = "Time Ellapsed until Max Force:", font = LARGE_FONT)
+    maxLabel.pack(pady=10,padx=10)
+    maxValLabel = Label(mainFrame, text = str(maxTime), font = LARGE_FONT)
+    maxValLabel.pack(pady=10,padx=10)
+    
     
     outFile = filedialog.asksaveasfilename(title = "Enter Output File For Data Analysis",defaultextension='.txt')
     with open(outFile, 'a') as file:
-         file.write("Maximum Force Applied to the Crutch " + str(maxForce) + "\n")
+         file.write("Maximum Force Applied to the Crutch: " + str(maxForce) + "\n")
+         file.write("Time Ellapsed until Max Force:" + str(maxTime) + "\n")
     
     plt.xlabel('Time')
     plt.ylabel('Force (lbf)')
