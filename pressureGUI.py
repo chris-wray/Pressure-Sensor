@@ -106,7 +106,7 @@ def analyzeCrutch():
     mainFrame.pack()
     root.filename =  filedialog.askopenfilename(title = "Choose File")
     fileChosen = root.filename
-    root.update()
+    
     pullData = open(fileChosen,'r').read()
     dataArray = pullData.split('\n')
     time=[]
@@ -122,13 +122,24 @@ def analyzeCrutch():
     maxValLabel = Label(mainFrame, text = str(maxForce), font = LARGE_FONT)
     maxValLabel.pack(pady=10,padx=10)
     
-    plt.plot(time,force)
-    plt.show()
-    
-    outFile = asksaveasfilename(filetypes=(("Text files","*.txt"),("All Files", "*.*")),
-                defaultextension='.txt', title="Window-2")
+    outFile = filedialog.asksaveasfilename(title = "Enter Output File For Data Analysis",defaultextension='.txt')
     with open(outFile, 'a') as file:
          file.write("Maximum Force Applied to the Crutch " + str(maxForce) + "\n")
+    
+    plt.xlabel('Time')
+    plt.ylabel('Force (lbf)')
+    plt.plot(time,force)
+    root.outPlot = filedialog.asksaveasfilename(title = "Enter Output File For Plotted Results",defaultextension='.png')
+    root.update()
+    if root.outPlot:
+       plt.savefig(root.outPlot)
+      
+    root.update()
+    plt.show()
+      
+  
+    
+    
          
    
 def analyzeShoe():
@@ -196,8 +207,7 @@ def analyzeShoe():
         result.pack(pady=10,padx=10)
         textResult = "Your Gait is Back Heavy: Most of the Pressure is on your Heel"
    
-   outFile = asksaveasfilename(filetypes=(("Text files","*.txt"),("All Files", "*.*")),
-               defaultextension='.txt', title="Window-2")
+   outFile = filedialog.asksaveasfilename(title = "Enter Output File For Data Analysis",defaultextension='.txt')
    with open(outFile, 'a') as file:
         file.write("Average Force Applied to the Toe Bone: " + str(avgFForce) + "\n")
         file.write("Average Force Applied to Mid-Foot: " + str(avgMForce) + "\n")
@@ -211,7 +221,7 @@ def analyzeShoe():
    plt.plot(time,frontForce)
    plt.plot(time, middleForce)
    plt.plot(time,backForce)
-   root.outPlot = filedialog.asksaveasfilename(filetypes=(("PNG Images","*.png"),("All Files", "*.*")),defaultextension='.png')
+   root.outPlot = filedialog.asksaveasfilename(title = "Enter Output File For Plotted Results",defaultextension='.png')
    root.update()
    if root.outPlot:
     plt.savefig(root.outPlot)
@@ -219,14 +229,6 @@ def analyzeShoe():
    root.update()
    plt.show()
    
-   
-   
-
-   
-        
-    
-
-
 
 
 app = SeaofBTCapp()
