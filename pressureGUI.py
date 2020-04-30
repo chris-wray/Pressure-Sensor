@@ -3,7 +3,11 @@
 
 import tkinter as tk
 from tkinter import filedialog
+from tkinter.filedialog import askopenfilename
+from tkinter.filedialog import askopenfile
+from tkinter.filedialog import asksaveasfilename
 from tkinter import *
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -120,14 +124,20 @@ def analyzeCrutch():
     
     plt.plot(time,force)
     plt.show()
+    
+    outFile = asksaveasfilename(filetypes=(("Text files","*.txt"),("All Files", "*.*")),
+                defaultextension='.txt', title="Window-2")
+    with open(outFile, 'a') as file:
+         file.write("Maximum Force Applied to the Crutch " + str(maxForce) + "\n")
+         
    
 def analyzeShoe():
    root = Tk()
    mainFrame = Frame(root, width=300, height =300)
    mainFrame.pack()
    root.filename =  filedialog.askopenfilename(title = "Choose File")
+   
    fileChosen = root.filename
-   root.update()
    pullData = open(fileChosen,'r').read()
    dataArray = pullData.split('\n')
    time=[]
@@ -168,6 +178,7 @@ def analyzeShoe():
    
    pos = 0
    biggest = averages[0]
+   txtResult = ""
    for i in range(0, len(averages)):
         if(averages[i] > biggest):
             biggest = averages[i]
@@ -175,16 +186,37 @@ def analyzeShoe():
    if(pos == 0):
         result = Label(mainFrame, text = "Your Gait is Front Heavy: Most of the Pressure is on your toe bone", font = LARGE_FONT)
         result.pack(pady=10,padx=10)
+        textResult = "Your Gait is Front Heavy: Most of the Pressure is on your toe bone"
    if(pos == 1):
         result = Label(mainFrame, text = "Your Gait is Even: Your step has equal distribution of weight", font = LARGE_FONT)
         result.pack(pady=10,padx=10)
+        textResult = "Your Gait is Even: Your step has equal distribution of weight"
    if(pos == 2):
         result = Label(mainFrame, text = "Your Gait is Back Heavy: Most of the Pressure is on your Heel", font = LARGE_FONT)
         result.pack(pady=10,padx=10)
+        textResult = "Your Gait is Back Heavy: Most of the Pressure is on your Heel"
    
+   outFile = asksaveasfilename(filetypes=(("Text files","*.txt"),("All Files", "*.*")),
+               defaultextension='.txt', title="Window-2")
+   with open(outFile, 'a') as file:
+        file.write("Average Force Applied to the Toe Bone: " + str(avgFForce) + "\n")
+        file.write("Average Force Applied to Mid-Foot: " + str(avgMForce) + "\n")
+        file.write("Average Force Applied to the Heel: " + str(avgBForce) + "\n")
+        file.write("Average Force Applied to the Toe Bone: " + str(avgFForce) + "\n")
+        file.write(textResult + "\n")
+
+   
+   plt.xlabel('Time')
+   plt.ylabel('Force (lbf)')
    plt.plot(time,frontForce)
    plt.plot(time, middleForce)
    plt.plot(time,backForce)
+   root.outPlot = filedialog.asksaveasfilename(filetypes=(("PNG Images","*.png"),("All Files", "*.*")),defaultextension='.png')
+   root.update()
+   if root.outPlot:
+    plt.savefig(root.outPlot)
+   
+   root.update()
    plt.show()
    
    
