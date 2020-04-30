@@ -120,8 +120,8 @@ def analyzeCrutch():
     maxTime = 0;
     maxForce = max(force)
     for i in range(0, len(force)):
-    if(force[i] == maxForce):
-        maxTime = time[i]/6000
+        if(force[i] == maxForce):
+            maxTime = time[i]/6000
         
     maxLabel = Label(mainFrame, text = "Maximum Force Applied to Crutch is:", font = LARGE_FONT)
     maxLabel.pack(pady=10,padx=10)
