@@ -170,7 +170,7 @@ def analyzeShoe():
    for eachLine in dataArray:
        if len(eachLine)>1:
            t,x,y,z = eachLine.split(',')
-           time.append(int(t))
+           time.append(int(t)/60000)
            frontForce.append(float(x))
            middleForce.append(float(y))
            backForce.append(float(z))
@@ -221,14 +221,13 @@ def analyzeShoe():
    
    outFile = filedialog.asksaveasfilename(title = "Enter Output File For Data Analysis",defaultextension='.txt')
    with open(outFile, 'a') as file:
-        file.write("Average Force Applied to the Toe Bone: " + str(avgFForce) + "\n")
-        file.write("Average Force Applied to Mid-Foot: " + str(avgMForce) + "\n")
-        file.write("Average Force Applied to the Heel: " + str(avgBForce) + "\n")
-        file.write("Average Force Applied to the Toe Bone: " + str(avgFForce) + "\n")
+        file.write("Average Force Applied to the Toe Bone: " + str(avgFForce) + " lbf\n")
+        file.write("Average Force Applied to Mid-Foot: " + str(avgMForce) + " lbf\n")
+        file.write("Average Force Applied to the Heel: " + str(avgBForce) + " lbf\n")
         file.write(textResult + "\n")
 
    
-   plt.xlabel('Time')
+   plt.xlabel('Time (mins)')
    plt.ylabel('Force (lbf)')
    plt.plot(time,frontForce)
    plt.plot(time, middleForce)
