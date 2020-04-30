@@ -63,7 +63,9 @@ void loop() {
   // Open file and write to SD card
   file = SD.open("file.txt", FILE_WRITE); // open "file.txt" to write data
   if (file) {
-    file.print(reading1); // write data to file
+    file.print(millis()); // write data to file
+    file.print(", ");
+    file.println(reading1);
     file.print(", ");
     file.println(reading2);
     file.close(); // close file
