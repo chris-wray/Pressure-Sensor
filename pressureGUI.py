@@ -114,31 +114,31 @@ def analyzeCrutch():
     for eachLine in dataArray:
         if len(eachLine)>1:
             x,y = eachLine.split(',')
-            time.append(float(x))
+            time.append(float(x)/60000)
             force.append(float(y))
         
     maxTime = 0;
     maxForce = max(force)
     for i in range(0, len(force)):
         if(force[i] == maxForce):
-            maxTime = time[i]/60000
+            maxTime = time[i]
         
     maxLabel = Label(mainFrame, text = "Maximum Force Applied to Crutch is:", font = LARGE_FONT)
     maxLabel.pack(pady=10,padx=10)
-    maxValLabel = Label(mainFrame, text = str(maxForce), font = LARGE_FONT)
+    maxValLabel = Label(mainFrame, text = str(maxForce) + " lbf" , font = LARGE_FONT)
     maxValLabel.pack(pady=10,padx=10)
     maxLabel = Label(mainFrame, text = "Time Ellapsed until Max Force:", font = LARGE_FONT)
     maxLabel.pack(pady=10,padx=10)
-    maxValLabel = Label(mainFrame, text = str(maxTime), font = LARGE_FONT)
+    maxValLabel = Label(mainFrame, text = str(maxTime) + " mins" , font = LARGE_FONT)
     maxValLabel.pack(pady=10,padx=10)
     
     
     outFile = filedialog.asksaveasfilename(title = "Enter Output File For Data Analysis",defaultextension='.txt')
     with open(outFile, 'a') as file:
-         file.write("Maximum Force Applied to the Crutch: " + str(maxForce) + "\n")
-         file.write("Time Ellapsed until Max Force:" + str(maxTime) + "\n")
+         file.write("Maximum Force Applied to the Crutch: " + str(maxForce) + " lbf\n")
+         file.write("Time Ellapsed until Max Force:" + str(maxTime) + " mins \n")
     
-    plt.xlabel('Time')
+    plt.xlabel('Time (mins)')
     plt.ylabel('Force (lbf)')
     plt.plot(time,force)
     root.outPlot = filedialog.asksaveasfilename(title = "Enter Output File For Plotted Results",defaultextension='.png')
@@ -181,17 +181,17 @@ def analyzeShoe():
    
    avgFLabel = Label(mainFrame, text = "Average Force Applied to the Toe Bone:", font = LARGE_FONT)
    avgFLabel.pack(pady=10,padx=10)
-   avgFLabel2 = Label(mainFrame, text = str(avgFForce), font = LARGE_FONT)
+   avgFLabel2 = Label(mainFrame, text = str(avgFForce) + " lbf", font = LARGE_FONT)
    avgFLabel2.pack(pady=10,padx=10)
    
    avgMLabel = Label(mainFrame, text = "Average Force Applied to Mid-Foot:", font = LARGE_FONT)
    avgMLabel.pack(pady=10,padx=10)
-   avgMLabel2 = Label(mainFrame, text = str(avgMForce), font = LARGE_FONT)
+   avgMLabel2 = Label(mainFrame, text = str(avgMForce) + " lbf", font = LARGE_FONT)
    avgMLabel2.pack(pady=10,padx=10)
    
    avgBLabel = Label(mainFrame, text = "Average Force Applied to the Heel:", font = LARGE_FONT)
    avgBLabel.pack(pady=10,padx=10)
-   avgBLabel2 = Label(mainFrame, text = str(avgBForce), font = LARGE_FONT)
+   avgBLabel2 = Label(mainFrame, text = str(avgBForce) + " lbf", font = LARGE_FONT)
    avgBLabel2.pack(pady=10,padx=10)
    
    averages = []
